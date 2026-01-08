@@ -11,9 +11,9 @@ Q5: lambda function kay ander aik cheez hoti ha forget wo kia hoti ha?<br></br>
 A: Jo lambda functions chal rhy hotey hain un may aik time function/constraint hotey hain usey forget boltey hain (is question ko gpt say aur verify karein)<br></br>
 Q6: What is the difference between and add and copy in dockerfile?<br></br>
 A: COPY just copies files from the local system into the image, while ADD can also extract archives and download files from URLs. In practice, COPY is preferred because it is more predictable.<br></br>
-Q7: Sometimes pipelines failed due to permission error. Why does this issue occur and how to resolve it?
-A: sometimes cache save ho jati ha server pay tou ap ko jo wo path deti ha us may ja kay cache remove kartey hain sudo rm –rf 
-Q8: Kubernetes may aik pod ha ya aik container ha wo crash backoff may phasa hua ha?
-A: kubectl logs, kubectl describe pods <pod-name>, akser ye error is wajha say hota ha kay humney image ka naam ghalat define kr diya ha..
-Q9: 
+Q7: Sometimes pipelines failed due to permission error. Why does this issue occur and how to resolve it?<br></br>
+A: sometimes cache save ho jati ha server pay tou ap ko jo wo path deti ha us may ja kay cache remove kartey hain sudo rm –rf <br></br>
+Q8: Kubernetes may aik pod ha ya aik container ha wo crash backoff may phasa hua ha?<br></br>
+A: kubectl logs, kubectl describe pods <pod-name>, akser ye error is wajha say hota ha kay humney image ka naam ghalat define kr diya ha..<br></br>
+Q9: <br></br>
 
