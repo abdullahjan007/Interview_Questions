@@ -15,5 +15,77 @@ Q7: Sometimes pipelines failed due to permission error. Why does this issue occu
 A: sometimes cache save ho jati ha server pay tou ap ko jo wo path deti ha us may ja kay cache remove kartey hain sudo rm –rf <br></br>
 Q8: Kubernetes may aik pod ha ya aik container ha wo crash backoff may phasa hua ha?<br></br>
 A: kubectl logs, kubectl describe pods <pod-name>, akser ye error is wajha say hota ha kay humney image ka naam ghalat define kr diya ha..<br></br>
-Q9: <br></br>
+Q9: Difference between Security groups and NACL's?<br></br>
+Q10: What is the difference between layer4 and layer 7 load balancer?<br></br>
+A: Load balancers distribute incoming traffic across multiple servers, but they operate at different layers of the OSI model, which affects how they make decisions.<br></br>
+
+🔹 Layer 4 Load Balancer (Transport Layer)<br></br>
+
+How it works:<br></br>
+
+Operates at Layer 4 (TCP/UDP).<br></br>
+
+Makes routing decisions based on IP address, port number, and protocol.<br></br>
+
+Does not inspect the actual data (payload) of packets.<br></br>
+
+Key characteristics:<br></br>
+
+Fast and efficient (low latency)<br></br>
+
+Protocol-based routing only<br></br>
+
+No understanding of HTTP/HTTPS content<br></br>
+
+Example use cases:<br></br>
+
+Simple TCP/UDP traffic distribution<br></br>
+
+High-performance applications where speed matters<br></br>
+
+Examples:<br></br>
+
+TCP load balancing in NGINX (stream module)<br></br>
+
+AWS Network Load Balancer (NLB)<br></br>
+
+🔹 Layer 7 Load Balancer (Application Layer)<br></br>
+
+How it works:<br></br>
+
+Operates at Layer 7 (HTTP/HTTPS).<br></br>
+
+Inspects application-level data such as:<br></br>
+
+URL path (/api, /login)<br></br>
+
+HTTP headers<br></br>
+
+Cookies<br></br>
+
+Hostnames<br></br>
+
+Key characteristics:<br></br>
+
+Content-aware routing<br></br>
+
+Supports SSL termination<br></br>
+
+Can perform advanced features like caching, authentication, and rate limiting<br></br>
+
+Slightly higher latency than L4<br></br>
+
+Example use cases:<br></br>
+
+Routing traffic based on URLs or domains<br></br>
+
+Microservices and API gateways<br></br>
+
+Web applications<br></br>
+
+Examples:<br></br>
+
+NGINX, HAProxy<br></br>
+
+AWS Application Load Balancer (ALB)<br></br>
 
