@@ -1,6 +1,6 @@
 # Interview_Questions
 # Sirius-BI Questions<br></br>
-
+# Round 1
 Q1: Ma jata hu aur website ka naam likhta hu but its not reachable but when I type ip it is reachable?<br></br>
 Q2: AWS scretes management?<br></br>
 Q3: Abhi service aik vendor provide kr rha ha but unho nay services ko apney infra pay shift karna ha tou kaisey karein ge?<br></br>
@@ -89,3 +89,11 @@ NGINX, HAProxy<br></br>
 
 AWS Application Load Balancer (ALB)<br></br>
 
+# Round 2<br></br>
+Q: Dockerfile likhwai manually<br></br>
+Q: DevOps kia hota ha ? Ye kaam tou aik IT wala banda bhi kr sakta ha tou phir devops engineer hi kyu chahiye ? MyAns: server wagera manage karna hota ha InterviewerReply: Acha btao server may kia manage karna hota ha?<br></br>
+Q: Linux ka aik tool ha logs dekhney wala btao wo kia ha aur logs kaisey dekhtey ?<br></br>
+Q: Apney aik app deploy ki aur 5 min baad us pay 500 internal server error a gya ap kis tarha us ko solve kro gay?<br></br>
+Q: Ma google.com hit karta hu step by step btao peechey kia hoga?<br></br>
+Q: What is difference between VM and docker? <br></br>
+Q: Meri aik file ha 256GB ki you jb ma VM pay ya docker pay use karta hu us nay tou 256 GB hi consume karna ha then why not you choose VM and why you choose docker?<br></br>
