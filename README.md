@@ -97,3 +97,4 @@ Q: Apney aik app deploy ki aur 5 min baad us pay 500 internal server error a gya
 Q: Ma google.com hit karta hu step by step btao peechey kia hoga?<br></br>
 Q: What is difference between VM and docker? <br></br>
 Q: Meri aik file ha 256GB ki you jb ma VM pay ya docker pay use karta hu us nay tou 256 GB hi consume karna ha then why not you choose VM and why you choose docker?<br></br>
+Q: aik app deploy ki ha us ka pdf preview show nhi ho rha kaisey set kro ge?<br></br>
