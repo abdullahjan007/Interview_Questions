@@ -99,3 +99,4 @@ Q: What is difference between VM and docker? <br></br>
 Q: Meri aik file ha 256GB ki you jb ma VM pay ya docker pay use karta hu us nay tou 256 GB hi consume karna ha then why not you choose VM and why you choose docker?<br></br>
 Q: aik app deploy ki ha us ka pdf preview show nhi ho rha kaisey set kro ge?<br></br>
 Q: I am using Loadbalancer in aws for 4 instances and i want my 20% traffic to go on instance 1, 30% traffic to go on instance 2, 25% traffic to go on instance 3 amd 25% traffic to go on instance 4. how this thing can be achieved?<br></br>
+Q: What are ingress services?<br></br>
