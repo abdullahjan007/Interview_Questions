@@ -100,3 +100,10 @@ Q: Meri aik file ha 256GB ki you jb ma VM pay ya docker pay use karta hu us nay 
 Q: aik app deploy ki ha us ka pdf preview show nhi ho rha kaisey set kro ge?<br></br>
 Q: I am using Loadbalancer in aws for 4 instances and i want my 20% traffic to go on instance 1, 30% traffic to go on instance 2, 25% traffic to go on instance 3 amd 25% traffic to go on instance 4. how this thing can be achieved?<br></br>
 Q: What are ingress services?<br></br>
+Q: introduction why are u moving or switching?
+Q: diff bw fargate and ec2?
+Q: how to check disk space in linux ubuntu?
+Q: sonarqube ?
+Q: github?
+Q: if a pod is stuck in crash error with specific triuble shooting steps?
+Q: if a new deployment fails how will u debug?
