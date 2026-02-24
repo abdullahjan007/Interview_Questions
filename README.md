@@ -107,3 +107,5 @@ Q: sonarqube ?
 Q: github?
 Q: if a pod is stuck in crash error with specific triuble shooting steps?
 Q: if a new deployment fails how will u debug?
+Q: If we have EC2 them why there's a need of ECS?
+Q: What is the abbreviation of NAT gateway?
