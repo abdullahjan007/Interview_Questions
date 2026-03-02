@@ -109,6 +109,8 @@ Q: if a pod is stuck in crash error with specific triuble shooting steps?
 Q: if a new deployment fails how will u debug?
 Q: If we have EC2 them why there's a need of ECS?
 Q: What is the abbreviation of NAT gateway?
+Q: What happens or what is the expected behaviour when CPU and RAM of server are full? The website deployed on it are working or not?
+A: CPU is manage by server/OS kerner so if CPU memory is full. It still runs your already deployed applications because you previously assigned it resources like use 1 CPU etc and if new requesr come then CPU make the processing slow or adds it in a queue but in case of RAM if RAM gets full then all the services crashes because it is not managed by server or OS kernel<br></br>
 Q: if we can use ecs for running containers then why do we need ec2 vm for running containers and vice versa?
 Q: Pipeline ki stages ma aik aisi koi stage hum bna saktey hain jaha pay koi permission ya approval lein?
 
