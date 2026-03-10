@@ -114,3 +114,4 @@ A: CPU is manage by server/OS kerner so if CPU memory is full. It still runs you
 Q: if we can use ecs for running containers then why do we need ec2 vm for running containers and vice versa?
 Q: Pipeline ki stages ma aik aisi koi stage hum bna saktey hain jaha pay koi permission ya approval lein?
 Q: What is fartgate?<br></br>
+Q: i have two public ec2 instances present in a two different subnets. Now if i want to remove the internet connection of one ec2 instance..What can i do?  I simply remove the internet gateway route from its route table..<br></br>
