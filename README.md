@@ -115,3 +115,5 @@ Q: if we can use ecs for running containers then why do we need ec2 vm for runni
 Q: Pipeline ki stages ma aik aisi koi stage hum bna saktey hain jaha pay koi permission ya approval lein?
 Q: What is fartgate?<br></br>
 Q: i have two public ec2 instances present in a two different subnets. Now if i want to remove the internet connection of one ec2 instance..What can i do?  I simply remove the internet gateway route from its route table..<br></br>
+
+Q: let suppose we have a 3 tier architecture..so what is my approach i should go for ecs or ec2? Ans: my approach is if i want a fully control on my infra.. i want to manage all the networking each and everything then i should go for ec2 else i should go for ecs... one more take on this is kay if we have a legacy code base and difficult to do its orchestration then we should go for ec2 else we should go for ecs <br></br> but one more question is kay how we can connect ecs with aws database?<br></br>
