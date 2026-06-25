@@ -736,7 +736,7 @@ Runner Stage
 
 ✅ Production-ready container
 
-
+# Q: why we use this command COPY --from=builder /app/dist ./dist in docker file<br></br>
 ## Copy Build Artifacts
 
 ```dockerfile
