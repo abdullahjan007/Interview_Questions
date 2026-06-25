@@ -735,3 +735,388 @@ Runner Stage
 ✅ Reduced attack surface
 
 ✅ Production-ready container
+
+
+## Copy Build Artifacts
+
+```dockerfile
+COPY --from=builder /app/dist ./dist
+```
+
+This is one of the most important instructions in a **multi-stage Docker build**. It copies the compiled application from the **builder stage** to the **final runtime stage**.
+
+---
+
+## General Syntax
+
+```dockerfile
+COPY --from=<stage-name> <source-path> <destination-path>
+```
+
+| Part | Description |
+|-------|-------------|
+| `--from=builder` | Specifies the stage from which files should be copied |
+| `/app/dist` | Source directory inside the builder stage |
+| `./dist` | Destination directory inside the current stage |
+
+---
+
+## Breaking Down the Command
+
+### 1. `--from=builder`
+
+```dockerfile
+COPY --from=builder ...
+```
+
+Earlier in the Dockerfile, we defined:
+
+```dockerfile
+FROM node:20 AS builder
+```
+
+Here:
+
+- `node:20` is the base image.
+- `builder` is the name assigned to this stage.
+
+Docker creates a temporary image for this stage during the build process.
+
+The `--from=builder` option tells Docker:
+
+> Copy files from the stage named **builder** instead of copying files from the local machine.
+
+Without `--from`, Docker copies files from the build context (your local project directory).
+
+---
+
+### 2. `/app/dist`
+
+This is the **source path** inside the `builder` stage.
+
+After executing:
+
+```bash
+npm run build
+```
+
+your project inside the builder container might look like this:
+
+```text
+/app
+├── src/
+├── package.json
+├── node_modules/
+├── tests/
+├── .git/
+└── dist/
+    ├── main.js
+    ├── app.js
+    └── utils.js
+```
+
+The `dist/` directory contains the compiled production-ready application.
+
+For example:
+
+```text
+src/main.ts
+```
+
+gets compiled into:
+
+```text
+dist/main.js
+```
+
+The command:
+
+```dockerfile
+COPY --from=builder /app/dist
+```
+
+tells Docker to copy only the contents of:
+
+```text
+/app/dist
+```
+
+from the builder stage.
+
+---
+
+### 3. `./dist`
+
+This is the destination path inside the **current stage** (the runtime stage).
+
+Suppose the runtime stage contains:
+
+```dockerfile
+FROM node:20-slim AS runner
+
+WORKDIR /app
+```
+
+Since the working directory is already set to:
+
+```text
+/app
+```
+
+the destination:
+
+```dockerfile
+./dist
+```
+
+actually means:
+
+```text
+/app/dist
+```
+
+inside the runtime container.
+
+After copying, the runtime container will contain:
+
+```text
+/app
+└── dist/
+    ├── main.js
+    ├── app.js
+    └── utils.js
+```
+
+---
+
+## Why Use Multi-Stage Copy?
+
+Consider the following directory structure inside the builder stage:
+
+```text
+/app
+├── src/
+├── tests/
+├── docs/
+├── .git/
+├── node_modules/
+├── coverage/
+├── package.json
+└── dist/
+```
+
+Most of these files are **not required in production**.
+
+Typically, only the compiled application is needed:
+
+```text
+dist/
+```
+
+By copying only `dist/`, the final image becomes:
+
+- Smaller
+- Faster to deploy
+- More secure
+- Easier to maintain
+
+---
+
+## Without Multi-Stage Builds
+
+A traditional Dockerfile might look like:
+
+```dockerfile
+COPY . .
+RUN npm install
+RUN npm run build
+```
+
+The final image would contain:
+
+```text
+src/
+tests/
+.git/
+coverage/
+node_modules/
+dist/
+```
+
+This means unnecessary files are included in production.
+
+Example:
+
+```text
+Source code
+Test files
+Git history
+Documentation
+Coverage reports
+```
+
+This can significantly increase the image size.
+
+---
+
+## With Multi-Stage Builds
+
+### Builder Stage
+
+```dockerfile
+FROM node:20 AS builder
+```
+
+Contains:
+
+```text
+src/
+tests/
+.git/
+node_modules/
+dist/
+```
+
+### Runner Stage
+
+```dockerfile
+FROM node:20-slim AS runner
+```
+
+Contains only:
+
+```text
+production node_modules/
+dist/
+```
+
+As a result:
+
+✅ Smaller image size
+
+✅ Better security
+
+✅ Faster deployment
+
+✅ Reduced attack surface
+
+---
+
+## Visual Representation
+
+### Builder Stage
+
+```text
++--------------------------------------+
+| builder                              |
+|--------------------------------------|
+| src/                                 |
+| tests/                               |
+| docs/                                |
+| node_modules/                        |
+| .git/                                |
+| package.json                         |
+| dist/                                |
++--------------------------------------+
+```
+
+After:
+
+```dockerfile
+COPY --from=builder /app/dist ./dist
+```
+
+### Runner Stage
+
+```text
++--------------------------------------+
+| runner                               |
+|--------------------------------------|
+| package.json                         |
+| production node_modules/             |
+| dist/                                |
++--------------------------------------+
+```
+
+---
+
+## Example: NestJS Application
+
+Suppose your NestJS project contains:
+
+```text
+src/
+├── main.ts
+├── app.module.ts
+└── users/
+```
+
+After running:
+
+```bash
+npm run build
+```
+
+NestJS generates:
+
+```text
+dist/
+├── main.js
+├── app.module.js
+└── users/
+```
+
+The command:
+
+```dockerfile
+COPY --from=builder /app/dist ./dist
+```
+
+copies the compiled files into the runtime image.
+
+Finally, the application is started using:
+
+```dockerfile
+CMD ["node", "dist/main.js"]
+```
+
+Node.js executes the compiled JavaScript files from the `dist/` directory.
+
+---
+
+## Build Output Directories for Different Frameworks
+
+| Framework | Build Output Directory |
+|-----------|------------------------|
+| NestJS | `dist/` |
+| TypeScript | `dist/` |
+| Angular | `dist/` |
+| Vite | `dist/` |
+| React | `build/` |
+| Next.js | `.next/` |
+
+Examples:
+
+### React
+
+```dockerfile
+COPY --from=builder /app/build ./build
+```
+
+### Next.js
+
+```dockerfile
+COPY --from=builder /app/.next ./.next
+```
+
+---
+
+## Key Takeaway
+
+```dockerfile
+COPY --from=builder /app/dist ./dist
+```
+
+means:
+
+> Copy the compiled application (`dist/`) from the **builder stage** into the **runtime stage**, so that the final Docker image contains only the files required to run the application.
