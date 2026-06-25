@@ -1400,3 +1400,8 @@ proxy_pass https://backend/login/;
 >
 > - **No URI in `proxy_pass`** → Original request path is preserved.
 > - **URI present in `proxy_pass`** → The matching `location` path is replaced by the URI specified in `proxy_pass`.
+
+# Q: <br></br>
+let suppose aik banda ha wo aws kay mumbai waley region ma ha aur buckey use kr rha ha jo kay stockholm ma apri hui ha.. ab rooz wo multiple data post ya fetch karta ha s3 say tou boht ziada cosst ati ha.. kaisey is ko optimize karein gay?<br></br>
+# A
+answer is s3 endpoint (not cnfr)<br></br>
