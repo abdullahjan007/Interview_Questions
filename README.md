@@ -1120,3 +1120,283 @@ COPY --from=builder /app/dist ./dist
 means:
 
 > Copy the compiled application (`dist/`) from the **builder stage** into the **runtime stage**, so that the final Docker image contains only the files required to run the application.
+
+# Nginx related mcqs questions:<br></br>
+
+# Understanding URI in Nginx `proxy_pass`
+
+## What is a URI?
+
+**URI (Uniform Resource Identifier)** is simply the part of a URL that identifies a specific resource on a server.
+
+In the context of Nginx, you can think of a URI as:
+
+> Everything that comes **after the domain name (host)**.
+
+---
+
+## Example URL
+
+```text
+https://example.com/api/users?id=123
+```
+
+This URL consists of:
+
+| Component | Value |
+|-----------|-------|
+| Protocol | `https` |
+| Host (Domain) | `example.com` |
+| URI | `/api/users?id=123` |
+
+The URI itself can be divided into:
+
+- **Path:** `/api/users`
+- **Query String:** `?id=123`
+
+---
+
+## URI in Nginx `proxy_pass`
+
+Understanding whether `proxy_pass` contains a URI is important because Nginx behaves differently depending on it.
+
+---
+
+## Example 1: No URI in `proxy_pass`
+
+```nginx
+location /api {
+    proxy_pass https://backend;
+}
+```
+
+### Breakdown
+
+| Part | Value |
+|-------|-------|
+| Protocol | `https` |
+| Host | `backend` |
+| URI | ❌ None |
+
+Since no URI is specified, Nginx forwards the original request URI unchanged.
+
+### Client Request
+
+```text
+/api/user
+```
+
+### Forwarded Request
+
+```text
+https://backend/api/user
+```
+
+---
+
+## Example 2: URI Present in `proxy_pass`
+
+```nginx
+location /api {
+    proxy_pass https://backend/;
+}
+```
+
+### Breakdown
+
+| Part | Value |
+|-------|-------|
+| Protocol | `https` |
+| Host | `backend` |
+| URI | `/` |
+
+The `/` after the hostname is considered the URI.
+
+### Client Request
+
+```text
+/api/user
+```
+
+Nginx removes the matched location prefix:
+
+```text
+/api/user
+^^^^
+```
+
+Remaining part:
+
+```text
+/user
+```
+
+Then Nginx appends the remaining part to the URI specified in `proxy_pass`.
+
+### Forwarded Request
+
+```text
+https://backend/user
+```
+
+---
+
+## Example 3: Custom URI in `proxy_pass`
+
+```nginx
+location /api {
+    proxy_pass https://backend/login/;
+}
+```
+
+### Breakdown
+
+| Part | Value |
+|-------|-------|
+| Protocol | `https` |
+| Host | `backend` |
+| URI | `/login/` |
+
+### Client Request
+
+```text
+/api/user
+```
+
+Nginx removes `/api` and replaces it with `/login/`.
+
+### Forwarded Request
+
+```text
+https://backend/login/user
+```
+
+---
+
+## Quick Comparison
+
+### No URI
+
+```nginx
+proxy_pass https://backend;
+```
+
+Result:
+
+```text
+/api       → https://backend/api
+/api/user  → https://backend/api/user
+```
+
+---
+
+### URI = `/`
+
+```nginx
+proxy_pass https://backend/;
+```
+
+Result:
+
+```text
+/api       → https://backend/
+/api/user  → https://backend/user
+```
+
+---
+
+### URI = `/login/`
+
+```nginx
+proxy_pass https://backend/login/;
+```
+
+Result:
+
+```text
+/api       → https://backend/login/
+/api/user  → https://backend/login/user
+```
+
+---
+
+## Visual Representation
+
+### Without URI
+
+```text
+Client Request
+      |
+      v
+/api/user
+      |
+      v
+proxy_pass https://backend;
+      |
+      v
+https://backend/api/user
+```
+
+---
+
+### With URI
+
+```text
+Client Request
+      |
+      v
+/api/user
+      |
+      v
+proxy_pass https://backend/;
+      |
+      v
+https://backend/user
+```
+
+---
+
+## Rule to Remember
+
+### ❌ No URI in `proxy_pass`
+
+```nginx
+proxy_pass https://backend;
+```
+
+> Nginx preserves the complete original request URI.
+
+---
+
+### ✅ URI Present in `proxy_pass`
+
+```nginx
+proxy_pass https://backend/;
+```
+
+or
+
+```nginx
+proxy_pass https://backend/login/;
+```
+
+> Nginx replaces the part of the URI matched by the `location` block with the URI specified in `proxy_pass`.
+
+---
+
+## Summary Table
+
+| `proxy_pass` | URI Present? | Request | Forwarded To |
+|--------------|-------------|---------|--------------|
+| `https://backend` | ❌ No | `/api/user` | `https://backend/api/user` |
+| `https://backend/` | ✅ `/` | `/api/user` | `https://backend/user` |
+| `https://backend/login/` | ✅ `/login/` | `/api/user` | `https://backend/login/user` |
+
+---
+
+## Key Takeaway
+
+> In Nginx, a **URI** is simply the path that appears after the hostname.
+>
+> - **No URI in `proxy_pass`** → Original request path is preserved.
+> - **URI present in `proxy_pass`** → The matching `location` path is replaced by the URI specified in `proxy_pass`.
